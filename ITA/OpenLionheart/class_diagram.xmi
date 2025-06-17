@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<XMI verified="false" xmi.version="1.4" timestamp="2025-06-08T21:59:59" xmlns:UML="http://schema.omg.org/spec/UML/1.4" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1">
+  <XMI.header>
+    <XMI.model xmi.name="UML_Model" />
+  </XMI.header>
+  <XMI.content>
+    <!-- UML:Package -->
+    <UML:ModelElement.model_element>
+      <UML:Namespace.ownedElement>
+        <!-- Class: Player -->
+        <UML:Class xmi.id="player" name="Player">
+          <UML:Classifier.feature>
+            <UML:Attribute name="player" type="int" visibility="private"/>
+            <UML:Attribute name="color" type="tuple" visibility="private"/>
+            <UML:Attribute name="Name" type="str" visibility="public"/>
+            <UML:Attribute name="units" type="list" visibility="private"/>
+          </UML:Classifier>
+          <UML:Class.operation>
+            <UML:Operation name="__init__(num_player: int, color: tuple, name: str, units: list)" visibility="public"/>
+          </UML:Class.operation>
+        </UML:Class>
+
+        <!-- Class: Cell -->
+        <UML:Class xmi.id="cell" name="Cell">
+          <UML:Generalization parent="cocos.sprite.Sprite"/>
+          <UML:Classifier.feature>
+            <UML:Attribute name="size" type="int" visibility="private"/>
+            <UML:Attribute name="orientation" type="int" visibility="private"/>
+            <UML:Attribute name="posx" type="int" visibility="public"/>
+            <UML:Attribute name="posy" type="int" visibility="public"/>
+            <UML:Attribute name="i" type="int" visibility="public"/>
+            <UML:Attribute name="j" type="int" visibility="public"/>
+            <UML:Attribute name="movements" type="int" visibility="private"/>
+            <UML:Attribute name="activated" type="bool" visibility="private"/>
+            <UML:Attribute name="isUnit" type="bool" visibility="public"/>
+          </UML:Classifier.feature>
+          <UML:Class.operation>
+            <UML:Operation name="__init__(image: str, size: int, i: float, j: int, x: float, y: float, orientation: float)" visibility="public"/>
+            <UML:Operation name="inrange(x: float, y: float) -> bool" visibility="public"/>
+            <UML:Operation name="update_position()" visibility="public"/>
+            <UML:Operation name="activate" visibility="public"/>
+            <UML:Operation name="deactivate" visibility="public"/>
+          </UML:Class.operation>
+        </UML:Class>
+
+        <!-- Class: Unit -->
+        <UML:Class xmi.id="unit" name="unit">
+            <UML:Generalization parent="Cell"/>
+            <UML:Classifier.feature>
+                <UML:Attribute name="soldiers" type="int" visibility="public"/>
+                <UML:Attribute name="isUnit" type="bool" visibility="true"/>
+                <UML:Attribute name="isKing" type="bool" visibility="public"/>
+                <UML:Attribute name="hitsPerSoldier" type="int" visibility="private"/>
+                <UML:Attribute name="dicePerSoldier" type="int" visibility="true"/>
+                <UML:Attribute name="hitsWith" type="int"/>
+                <UML:Attribute name="opacity" type="int" visibility="public"/>
+                <UML:Attribute name="text" type="cocos.text.Label" visibility="private"/>
+                <UML:Attribute name="owner" type="Player" visibility="public"/>
+                <UML:Attribute name="color" type="tuple" visibility="true"/>
+                <UML:Attribute name="orientation_sprite" type="cocos.sprite.Sprite" visibility="private"/>
+                <UML:Attribute name="movementCost" type="int" visibility="true"/>
+                <UML:Attribute name="selected_border" type="cocos.sprite.Sprite" visibility="private"/>
+                <UML:Attribute name="action_count" type="int" visibility="private"/>
+                <UML:Attribute name="has_moved" type="bool" visibility="true"/>
+                <UML:Attribute name="has_attacked" type="bool" visibility="true"/>
+            </UML:Classifier.feature>
+            <UML:Class.operation>
+                <UML:Operation name="__init__(image: str, orientation: int, x: int, y: float, j: float, i: int, soldiers: int, owner: Player)" visibility="public"/>
+                <UML:Operation name="update_text" visibility="true"/>
+                <UML:Operation name="attack_result(diceRoll: list, defender: Unit)" visibility="public"/>
+                <UML:Operation name="get_attacks() -> list" type="list" visibility="public"/>
+                <UML:Operation name="damage(impacts: int)" visibility="true"/>
+                <UML:Operation name="panic" visibility="public"/>
+                <UML:Operation name="update_position" visibility="true"/>
+                <UML:Operation name="rotate_orientation" visibility="public"/>
+                <UML:Operation name="move" type="bool" visibility="true"/>
+                <UML:Operation name="attack" type="bool" visibility="true"/>
+                <UML:Operation name="get_dice_count(defender: int)" visibility="1"/>
+                <UML:Operation name="update_position" visibility="public"/>
+                <UML:Operation name="setOrientation(o: int)" visibility="true"/>
+                <UML:Operation name="activate" visibility="true"/>
+                <UML:Operation name="deactivate" visibility="true"/>
+                <UML:Operation name="select" visibility="public"/>
+                <UML:Operation name="deselect" visibility="true"/>
+                <UML:Operation name="reset_action" visibility="true"/>
+            </UML:Class.operation>
+        </UML:Class>
+
+        <!-- Class: Soldier -->
+        <UML:Class xmi.id="soldier" name="soldier">
+          <UML:Generalization parent="unit"/>
+          <UML:Classifier.feature>
+            <UML:Attribute name="movements" type="int" visibility="public"/>
+          </UML:Classifier.feature>
+          <UML:Class.operation>
+            <UML:Operation name="__init__(i: int, j: int, x: float, y: float, orientation: int, soldiers: int, owner: Player)" visibility="public"/>
+          </UML:Class.operation>
+        </UML:Class>
+
+        <!-- Class: Archer -->
+        <UML:Class xmi.id="archer" name="archer">
+          <UML:Generalization parent="unit"/>
+          <UML:Classifier.feature>
+            <UML:Attribute name="movements" type="int" visibility="public"/>
+          </UML:Classifier.feature>
+          <UML:Class.operation>
+            <UML:Operation name="__init__(i: int, j: int, x: float, y: float, orientation: int, soldiers: int, owner: Player)" visibility="public"/>
+            <UML:Operation name="get_attacks() -> list" visibility="public"/>
+          </UML:Class.operation>
+        </UML:Class>
+
+        <!-- Class: Knight -->
+        <UML:Class xmi.id="knight" name="knight">
+          <UML:Generalization parent="unit"/>
+          <UML:Classifier.feature>
+            <UML:Attribute name="movements" type="int" visibility="public"/>
+          </UML:Classifier.feature>
+          <UML:Class.operation>
+            <UML:Operation name="__init__(i: int, j: int, x: float, y: float, orientation: int, soldiers: int, owner: Player)" visibility="public"/>
+          </UML:Class.operation>
+        </UML:Class>
+
+        <!-- Class: King -->
+        <UML:Class xmi.id="king" name="king">
+          <UML:Generalization parent="unit"/>
+          <UML:Classifier.feature>
+            <UML:Attribute name="movements" type="int" visibility="public"/>
+          </UML:Classifier.feature>
+          <UML:Class.operation>
+            <UML:Operation name="__init__(i: int, j: int, x: float, y: float, orientation: int, owner: Player)" visibility="public"/>
+          </UML:Class.operation>
+        </UML:Class>
+
+        <!-- Class: Peasant -->
+        <UML:Class xmi.id="peasant" name="peasant">
+          <UML:Generalization parent="unit"/>
+          <UML:Classifier.feature>
+            <UML:Attribute name="movements" type="int" visibility="public"/>
+          </UML:Classifier.feature>
+          <UML:Class.operation>
+            <UML:Operation name="__init__(i: int, j: int, x: float, y: float, orientation: int, soldiers: int, owner: Player)" visibility="public"/>
+            <UML:Operation name="attack_result(diceRoll: list) -> list" visibility="public"/>
+          </UML:Class.operation>
+        </UML:Class>
+
+        <!-- Class: HeavyInfantry -->
+        <UML:Class xmi.id="heavy_infantry" name="heavy_infantry">
+          <UML:Generalization parent="unit"/>
+          <UML:Classifier.feature>
+            <UML:Attribute name="movements" type="int" visibility="public"/>
+          </UML:Classifier.feature>
+          <UML:Class.operation>
+            <UML:Operation name="__init__(i: int, j: int, x: float, y: float, orientation: int, soldiers: int, owner: Player)" visibility="public"/>
+            <UML:Operation name="get_attacks() -> list" visibility="public"/>
+          </UML:Class.operation>
+        </UML:Class>
+
+        <!-- Class: Mercenary -->
+        <UML:Class xmi.id="mercenary" name="mercenary">
+          <UML:Generalization parent="unit"/>
+          <UML:Classifier.feature>
+            <UML:Attribute name="movements" type="int" visibility="public"/>
+          </UML:Classifier.feature>
+          <UML:Class.operation>
+            <UML:Operation name="__init__(i: int, j: int, x: float, y: float, orientation: int, soldiers: int, owner: Player)" visibility="public"/>
+          </UML:Class.operation>
+        </UML:Class>
+
+        <!-- Class: Table -->
+        <UML:Class xmi.id="table" name="Table">
+          <UML:Generalization parent="cocos.layer.Layer"/>
+          <UML:Classifier.feature>
+            <UML:Attribute name="cell_list" type="list" visibility="private"/>
+            <UML:Attribute name="cell_size" type="int" visibility="private"/>
+            <UML:Attribute name="rows" type="int" visibility="private"/>
+            <UML:Attribute name="columns" type="int" visibility="private"/>
+          </UML:Classifier.feature>
+          <UML:Class.operation>
+            <UML:Operation name="__init__(rows: int, columns: int, cell_size: int, cell_image: str)" visibility="public"/>
+            <UML:Operation name="print_cells" visibility="public"/>
+            <UML:Operation name="deploy_unit(i: int, j: int, unit: Unit) -> bool" visibility="public"/>
+            <UML:Operation name="get_cell(x: float, y: float) -> Cell" visibility="public"/>
+            <UML:Operation name="get(j: int) -> float" visibility="public"/>
+            <UML:Operation name="cell_at(i: int, j: int) -> Cell" visibility="public"/>
+            <UML:Operation name="insert_cell(i: int, j: int, new_cell: Cell)" visibility="public"/>
+            <UML:Operation name="clear_activated" visibility="public"/>
+            <UML:Operation name="is_valid_move(i: int, j: int, unit: Unit) -> bool" visibility="public"/>
+          </UML:Class.operation>
+        </UML:Class>
+
+        <!-- Class: GameController -->
+        <UML:Class xmi.id="gamecontroller" name="GameController">
+            <UML:Classifier.feature>
+                <UML:Attribute name="tablero" type="Table" visibility="public"/>
+                <UML:Attribute name="player1" type="Player" visibility="public"/>
+                <UML:Attribute name="player2" type="Player" visibility="public"/>
+                <UML:Attribute name="advancedGame" type="bool" visibility="public"/>
+                <UML:Attribute name="bot_mode" type="bool" visibility="public"/>
+                <UML:Attribute name="current_player" type="Player" visibility="public"/>
+            </UML:Classifier.feature>
+            <UML:Class.operation>
+                <UML:Operation name="__init__(advanced: bool, bot_mode: bool)" visibility="public"/>
+                <UML:Operation name="initialize_table" visibility="public"/>
+                <UML:Operation name="end_turn" visibility="public"/>
+                <UML:Operation name="perform_attack(attacker: Unit, defender: Unit, dice_results: list) -> bool" visibility="public"/>
+                <UML:Operation name="bot_turn" visibility="public"/>
+            </UML:Class.operation>
+        </UML:Class>
+
+        <!-- Class: DeployView -->
+        <UML:Class xmi.id="deployview" name="DeployView">
+          <UML:Generalization parent="cocos.layer.Layer"/>
+          <UML:Classifier.feature>
+            <UML:Attribute name="controller" type="GameController" visibility="private"/>
+            <UML:Attribute name="deploy_area" type="Table" visibility="private"/>
+            <UML:Attribute name="text_background" type="cocos.layer.ColorLayer" visibility="private"/>
+            <UML:Attribute name="text" type="cocos.text.Label" visibility="private"/>
+            <UML:Attribute name="playerDeploying" type="Player" visibility="private"/>
+            <UML:Attribute name="unitsDeployed" type="int" visibility="private"/>
+            <UML:Attribute name="selected" type="Unit" visibility="private"/>
+          </UML:Classifier.feature>
+          <UML:Class.operation>
+            <UML:Operation name="__init__(gameController: GameController)" visibility="public"/>
+            <UML:Operation name="show_deploy_cells(player: Player)" visibility="public"/>
+            <UML:Operation name="create_units(player: Player, orientation: int)" visibility="public"/>
+            <UML:Operation name="autoDeploy" visibility="public"/>
+            <UML:Operation name="deploy(x: float, y: float)" visibility="public"/>
+            <UML:Operation name="on_mouse_release(x: float, y: float, buttons: int, modifiers: int)" visibility="public"/>
+            <UML:Operation name="select(unit: Unit)" visibility="public"/>
+          </UML:Class.operation>
+        </UML:Class>
+
+        <!-- Class: GameView -->
+        <UML:Class xmi.id="gameview" name="GameView">
+            <UML:Generalization parent="cocos.layer.Layer"/>
+            <UML:Classifier.feature>
+                <UML:Attribute name="controller" type="GameController" visibility="private"/>
+                <UML:Attribute name="dice_layer" type="DiceLayer" visibility="private"/>
+                <UML:Attribute name="selected_unit" type="Unit" visibility="private"/>
+                <UML:Attribute name="target_unit" type="Unit" visibility="private"/>
+                <UML:Attribute name="dice_rolled" type="bool" visibility="private"/>
+                <UML:Attribute name="end_turn_button" type="cocos.sprite.Sprite" visibility="private"/>
+                <UML:Attribute name="end_turn_label" type="cocos.text.Label" visibility="private"/>
+                <UML:Attribute name="turn_label" type="cocos.text.Label" visibility="private"/>
+            </UML:Classifier.feature>
+            <UML:Class.operation>
+                <UML:Operation name="__init__(gameController: GameController)" visibility="public"/>
+                <UML:Operation name="update_turn" visibility="public"/>
+                <UML:Operation name="on_mouse_press(x: float, y: float, buttons: int, modifiers: int)" visibility="public"/>
+            </UML:Class.operation>
+        </UML:Class>
+
+        <!-- Class: DiceLayer -->
+        <UML:Class xmi.id="dicelayer" name="DiceLayer">
+            <UML:Generalization parent="cocos.layer.Layer"/>
+            <UML:Classifier.feature>
+                <UML:Attribute name="roll_button" type="cocos.sprite.Sprite" visibility="private"/>
+                <UML:Attribute name="button_label" type="cocos.text.Label" visibility="private"/>
+                <UML:Attribute name="dice_sprites" type="list" visibility="private"/>
+                <UML:Attribute name="enabled" type="bool" visibility="private"/>
+                <UML:Attribute name="dice_count" type="int" visibility="private"/>
+            </UML:Classifier.feature>
+            <UML:Class.operation>
+                <UML:Operation name="__init__" visibility="public"/>
+                <UML:Operation name="roll_dice" visibility="public"/>
+                <UML:Operation name="get_dice_results -> list" visibility="public"/>
+                <UML:Operation name="set_enabled(enabled: bool, dice_count: int)" visibility="public"/>
+                <UML:Operation name="on_mouse_release(x: float, y: float, buttons: int, modifiers: int)" visibility="public"/>
+            </UML:Class.operation>
+        </UML:Class>
+
+        <!-- Associations -->
+        <UML:Association xmi.id="assoc_table_cell">
+          <UML:AssociationEnd type="table" name="cell_list" aggregation="composite"/>
+          <UML:AssociationEnd type="cell" multiplicity="0..*"/>
+        </UML:Association>
+        <UML:Association xmi.id="assoc_unit_owner">
+          <UML:AssociationEnd type="unit" name="owner"/>
+          <UML:AssociationEnd type="player"/>
+        </UML:Association>
+        <UML:Association xmi.id="assoc_controller_table">
+          <UML:AssociationEnd type="gamecontroller" name="tablero"/>
+          <UML:AssociationEnd type="table"/>
+        </UML:Association>
+        <UML:Association xmi.id="assoc_controller_players">
+          <UML:AssociationEnd type="gamecontroller" name="player1"/>
+          <UML:AssociationEnd type="player"/>
+          <UML:AssociationEnd type="gamecontroller" name="player2"/>
+          <UML:AssociationEnd type="player"/>
+          <UML:AssociationEnd type="gamecontroller" name="current_player"/>
+          <UML:AssociationEnd type="player"/>
+        </UML:Association>
+        <UML:Association xmi.id="assoc_view_controller">
+          <UML:AssociationEnd type="deployview" name="controller"/>
+          <UML:AssociationEnd type="gamecontroller"/>
+          <UML:AssociationEnd type="gameview" name="controller"/>
+          <UML:AssociationEnd type="gamecontroller"/>
+        </UML:Association>
+      </UML:Namespace.ownedElement>
+    </UML:ModelElement.model_element>
+  </XMI.content>
+</XMI>
