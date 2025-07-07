@@ -40,7 +40,7 @@ if [ "$INSTALL_DEPENDENCIES" = true ]; then
 
     # Installa le dipendenze Python
     zenity --info --width=400 --text="By installing Python dependencies..."
-    pip3 install pyglet cocos2d
+    pip3 install pyglet==1.4.10 cocos2d
 fi
 
 # Chiede all'utente dove installare OpenLionheart
