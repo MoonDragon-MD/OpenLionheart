@@ -11,7 +11,7 @@ So I decided to rewrite it all in python3 adding all the functionality of the or
 
 ### Dependencies
 
-```pip install pyglet cocos2d```
+```pip install pyglet==1.4.10 cocos2d```
 
 ## Installation
 
