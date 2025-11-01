@@ -6,8 +6,8 @@ from view import DeployView, GameView
 from cocos.director import director
 import pyglet
 
-# Gioco Open Lionheart by MoonDragon v.1.0
-# Giugno 2025 - revisione n.85
+# Gioco Open Lionheart by MoonDragon v.1.1
+# Novembre 2025 - revisione n.3
 # https://github.com/MoonDragon-MD/OpenLionheart
 
 # Dipendenze richieste
@@ -37,7 +37,7 @@ class BannerLayer(cocos.layer.Layer):
         self.add(instruction, z=1)
         # Versione
         instruction = cocos.text.Label(
-            "V. 1.0 Rev.85",
+            "V. 1.1 Rev.3",
             font_name='Arial',
             font_size=12,
             color=(255, 255, 255, 255),

@@ -67,7 +67,9 @@ class TableView(cocos.layer.Layer):
                 sprite, z = child
                 if isinstance(sprite, unit) and sprite.i == i and sprite.j == j:
                     self.remove(sprite)
-                    print(f"TableView: Rimossa sprite obsoleta da ({i}, {j})")
+                    sprite.visible = False
+                    sprite.opacity = 0
+                    print(f"TableView: Rimossa sprite obsoleta da ({i}, {j}), visibile: {sprite.visible}, opacità: {sprite.opacity}")
 
 # Livello interfaccia utente
 class UILayer(cocos.layer.Layer):

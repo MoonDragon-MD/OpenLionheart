@@ -125,6 +125,7 @@ class unit(Cell):
     def get_attacks(self, tablero):
         unit_type = self.__class__.__name__
         attacks = []
+        print(f"Verifica attacchi per {unit_type} a ({self.i}, {self.j}), orientamento: {self.orientation}")
 
         def is_valid_pos(i, j):
             return 0 <= i < 8 and 0 <= j < 9
@@ -338,12 +339,23 @@ class unit(Cell):
                 return False
 
     def update_orientation(self):
-        self.orientation_sprite.do(RotateBy(90 * (abs(1 - self.orientation)), 0))
+        # Mappa orientamento a gradi (assumendo direction.png punta su)
+        angle_map = {
+            1: 0,    # Su
+            2: 90,   # Destra
+            3: 180,  # Giù
+            4: 270   # Sinistra
+        }
+        # Resetta la rotazione corrente per evitare accumuli
+        self.orientation_sprite.rotation = 0
+        # Applica il nuovo angolo
+        self.orientation_sprite.rotation = angle_map.get(self.orientation, 0)
+        print(f"Aggiornato orientamento: {self.orientation}, angolo: {self.orientation_sprite.rotation}")
 
     def rotate_orientation(self):
         self.orientation = (self.orientation % 4) + 1
         self.update_orientation()
-        print(f"Rotazione: orientamento {self.orientation}")
+        print(f"Rotazione: orientamento {self.orientation}, angolo sprite: {self.orientation_sprite.rotation}")
         return True
 
     def move(self):
@@ -415,13 +427,19 @@ class unit(Cell):
         self.move_marker2.visible = self.move_marker2.visible
         self.move_marker2.opacity = 255 if self.move_marker2.visible else 0
         print(f"Posizione aggiornata: ({self.posx}, {self.posy}), visibile: {self.visible}, opacità: {self.opacity}, marker1_visible={self.move_marker1.visible}, marker2_visible={self.move_marker2.visible}")
-		
+        
     def setOrientation(self, o):
-        if o < self.orientation:
-            self.orientation_sprite.do(RotateBy(90 * (o - self.orientation), 0))
-        else:
-            self.orientation_sprite.do(RotateBy(90 * (abs(o - self.orientation)), 0))
+        # Mappa orientamento a gradi
+        angle_map = {
+            1: 0,    # Su
+            2: 90,   # Destra
+            3: 180,  # Giù
+            4: 270   # Sinistra
+        }
         self.orientation = o
+        self.orientation_sprite.rotation = 0  # Resetta
+        self.orientation_sprite.rotation = angle_map.get(self.orientation, 0)
+        print(f"Impostato orientamento: {self.orientation}, angolo: {self.orientation_sprite.rotation}")
 
     def activate(self):
         self.color = (255, 154, 50)
@@ -523,7 +541,7 @@ class crossbowman(unit):
         self.image_loaded = False
         self.load_image()
         print(f"Azioni resettate: {self.__class__.__name__} a ({self.i}, {self.j}), marker1={self.move_marker1.visible}, marker2={self.move_marker2.visible}")
-		
+        
 class shield_wall(unit):
     def __init__(self, i, j, x, y, orientation, soldiers, owner, table=None):
         super().__init__("shield_wall.png", i, j, x, y, orientation, soldiers, owner, table)
