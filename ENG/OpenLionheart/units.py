@@ -125,6 +125,7 @@ class unit(Cell):
     def get_attacks(self, tablero):
         unit_type = self.__class__.__name__
         attacks = []
+        print(f"Check attacks for {unit_type} a ({self.i}, {self.j}), orientation: {self.orientation}")
 
         def is_valid_pos(i, j):
             return 0 <= i < 8 and 0 <= j < 9
@@ -338,12 +339,23 @@ class unit(Cell):
                 return False
 
     def update_orientation(self):
-        self.orientation_sprite.do(RotateBy(90 * (abs(1 - self.orientation)), 0))
+        # Degree orientation map (assuming direction.png points up)
+        angle_map = {
+            1: 0,    # Up
+            2: 90,   # Right
+            3: 180,  # Down
+            4: 270   # Left
+        }
+        # Reset the current rotation to avoid build-up
+        self.orientation_sprite.rotation = 0
+        # Apply the new angle
+        self.orientation_sprite.rotation = angle_map.get(self.orientation, 0)
+        print(f"Updated orientation: {self.orientation}, angle: {self.orientation_sprite.rotation}")
 
     def rotate_orientation(self):
         self.orientation = (self.orientation % 4) + 1
         self.update_orientation()
-        print(f"Rotazione: orientamento {self.orientation}")
+        print(f"Rotation: orientation {self.orientation}, angle sprite: {self.orientation_sprite.rotation}")
         return True
 
     def move(self):
@@ -417,11 +429,17 @@ class unit(Cell):
         print(f"Posizione aggiornata: ({self.posx}, {self.posy}), visibile: {self.visible}, opacità: {self.opacity}, marker1_visible={self.move_marker1.visible}, marker2_visible={self.move_marker2.visible}")
 		
     def setOrientation(self, o):
-        if o < self.orientation:
-            self.orientation_sprite.do(RotateBy(90 * (o - self.orientation), 0))
-        else:
-            self.orientation_sprite.do(RotateBy(90 * (abs(o - self.orientation)), 0))
+        # Degree orientation map
+        angle_map = {
+            1: 0,    # Up
+            2: 90,   # Right
+            3: 180,  # Down
+            4: 270   # Left
+        }
         self.orientation = o
+        self.orientation_sprite.rotation = 0  # Reset
+        self.orientation_sprite.rotation = angle_map.get(self.orientation, 0)
+        print(f"Set orientation: {self.orientation}, angle: {self.orientation_sprite.rotation}")
 
     def activate(self):
         self.color = (255, 154, 50)
